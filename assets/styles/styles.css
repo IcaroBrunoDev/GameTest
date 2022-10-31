@@ -1,0 +1,77 @@
+.scenario {
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  border: 1px solid black;
+  position: absolute;
+  top: 0;
+  background-color: #043247;
+}
+
+.jump {
+  animation: jump 500ms ease-in-out;
+}
+
+.move-foward {
+  animation: walk 500ms ease-in-out;
+}
+
+.hero {
+  position: absolute;
+  bottom: -10px;
+}
+
+.hero img {
+  width: 230px;
+  height: 230px;
+}
+
+.villians {
+  position: absolute;
+  right: 0;
+  bottom: -10px;
+}
+
+.villians img {
+  width: 280px;
+  height: 280px;
+}
+
+/** --------------------------------------------------------------------------------------- *
+ ** --------------------------------- ANIMATIONS ------------------------------------------ */
+
+@keyframes jump {
+  0% {
+    bottom: 0px;
+  }
+
+  25% {
+    bottom: 100px;
+  }
+
+  50% {
+    bottom: 200px;
+  }
+
+  75% {
+    bottom: 100px;
+  }
+
+  100% {
+    bottom: 0;
+  }
+}
+
+@keyframes walk {
+  0% {
+    left: 0px;
+  }
+
+  50% {
+    left: 10px;
+  }
+
+  100% {
+    left: 20px;
+  }
+}
