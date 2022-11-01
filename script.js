@@ -1,108 +1,35 @@
-class Heroes {
-  #heroLife = 100;
-  #heroWidth = 230;
-  #heroHeight = 230;
+import Game from "./models/Game.js";
 
-  constructor(scenarioWidth) {
-    this.scenarioWidth = scenarioWidth - this.#heroWidth;
-    this.heroElement = document.querySelector(".hero");
+window.addEventListener("load", function () {
+  const canvas = document.getElementById("canvas1");
+  const ctx = canvas.getContext("2d");
 
-    this.#setStoppedHeroAnimation();
+  const width = (canvas.width = 500);
+  const height = (canvas.height = 500);
+
+  console.log(canvas);
+  console.log(ctx);
+
+  const game = new Game(width, height);
+
+  /** AnimationLoop
+   * 
+   *  That Function Will Call The Game Update 
+   *  And The Game Drawn and requestAnimationFrame
+   *  To Create a Player Box Animated Frame at Frame
+   *  
+   *  ClearRect is used to prevent a lot of box rendering
+   *  in screen, that method remove other boxes at X: 0, Y:0 (Draw Start Pos)
+   * 
+   */
+
+  function animate() {
+    ctx.clearRect(0, 0, width, height);
+
+    game.update();
+    game.draw(ctx);
+    requestAnimationFrame(animate);
   }
 
-  get heroTotalLife() {
-    return this.#heroLife;
-  }
-
-  get heroWidthAndHeight() {
-    return { width: this.#heroWidth, height: this.#heroHeight };
-  }
-
-  #setStoppedHeroAnimation() {
-    const imageHero = document.createElement("img");
-
-    imageHero.src = "./assets/heros/Titania/Titania-Stopped.gif";
-    imageHero.className = "hero stopped";
-
-    this.heroElement.appendChild(imageHero);
-  }
-
-  #setAttackHeroAnimation() {
-    const imageHero = document.createElement("img");
-
-    imageHero.src = "./assets/heros/Titania/TitaniaFullGif.gif";
-    imageHero.className = "hero stopped";
-
-    this.heroElement.appendChild(imageHero);
-  }
-
-  moveBackWard() {
-    const heroeLastPos = this.heroElement.offsetLeft;
-
-    if (heroeLastPos > 0) {
-      this.heroElement.style.left = `${heroeLastPos - 20}px`;
-    } else {
-      this.heroElement.style.left = `${heroeLastPos + 10}px`;
-    }
-  }
-
-  moveFoward() {
-    const heroeLastPos = this.heroElement.offsetLeft;
-
-    if (heroeLastPos <= this.scenarioWidth) {
-      this.heroElement.style.left = `${heroeLastPos + 20}px`;
-    } else {
-      this.heroElement.style.left = `${heroeLastPos - 10}px`;
-    }
-  }
-
-  jump() {
-    this.heroElement.classList.add("jump");
-
-    setTimeout(() => {
-      this.heroElement.classList.remove("jump");
-    }, 500);
-  }
-
-  attack() {
-    const imageHero = document.createElement("img");
-
-    imageHero.src = "./assets/heros/Titania/TitaniaFullGif.gif";
-    imageHero.className = "hero attack";
-
-    this.heroElement.appendChild(imageHero);
-  }
-}
-
-window.onload = function () {
-  const screenWidth = document.getElementsByTagName("body")[0];
-
-  const heroes = new Heroes(screenWidth.offsetWidth);
-
-  document.onkeydown = function (event) {
-    const { keyCode } = event;
-
-    console.log(keyCode);
-
-    switch (keyCode) {
-      case 13:
-        heroes.attack();
-        break;
-
-      case 32:
-        heroes.jump();
-        break;
-
-      case 37:
-        heroes.moveBackWard();
-        break;
-
-      case 39:
-        heroes.moveFoward();
-        break;
-
-      default:
-        return;
-    }
-  };
-};
+  animate();
+});
