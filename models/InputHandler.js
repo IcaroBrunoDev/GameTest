@@ -15,6 +15,8 @@ export default class InputHandler {
         this.game.keys.push(key);
       } else if (key === " ") {
         this.game.player.shootTop();
+      } else if (key === "d") {
+        this.game.debug = !this.game.debug;
       }
     });
 

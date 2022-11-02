@@ -11,10 +11,11 @@ export default class Projectile {
     this.game = game;
     this.x = x;
     this.y = y;
-    this.width = 10;
-    this.heght = 3;
+    this.width = 20;
+    this.height = 20;
     this.speed = 3;
     this.markedForDeletion = false;
+    this.image = document.getElementById("projectile");
   }
 
   update() {
@@ -27,7 +28,6 @@ export default class Projectile {
   }
 
   draw(context) {
-    context.fillStyle = "black";
-    context.fillRect(this.x, this.y, this.width, this.heght);
+    context.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
 }

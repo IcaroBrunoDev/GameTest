@@ -4,32 +4,35 @@ window.addEventListener("load", function () {
   const canvas = document.getElementById("canvas1");
   const ctx = canvas.getContext("2d");
 
-  const width = (canvas.width = 500);
+  const width = (canvas.width = 700);
   const height = (canvas.height = 500);
 
-  console.log(canvas);
-  console.log(ctx);
 
   const game = new Game(width, height);
 
+  let lastTime = 0;
+
   /** AnimationLoop
-   * 
-   *  That Function Will Call The Game Update 
+   *
+   *  That Function Will Call The Game Update
    *  And The Game Drawn and requestAnimationFrame
    *  To Create a Player Box Animated Frame at Frame
-   *  
+   *
    *  ClearRect is used to prevent a lot of box rendering
    *  in screen, that method remove other boxes at X: 0, Y:0 (Draw Start Pos)
-   * 
+   *
    */
 
-  function animate() {
+  function animate(timeStamp) {
+    const deltaTime = timeStamp - lastTime;
+    lastTime = timeStamp;
+
     ctx.clearRect(0, 0, width, height);
 
-    game.update();
+    game.update(deltaTime);
     game.draw(ctx);
     requestAnimationFrame(animate);
   }
 
-  animate();
+  animate(0);
 });
