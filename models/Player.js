@@ -23,16 +23,13 @@ export default class Player {
     this.speedX = 0;
     this.maxSpeed = 5;
     this.projectiles = [];
-    this.powerUp = false;
+    this.powerUp = true;
     this.powerUpTimer = 0;
-    this.powerUpLimit = 10000;
+    this.powerUpLimit = 100000000;
     this.image = document.getElementById("player");
   }
 
   update(deltaTime) {
-
-    console.log(this.y)
-
     if (this.game.keys.includes("ArrowUp")) {
       this.speedY = -this.maxSpeed;
     } else if (this.game.keys.includes("ArrowDown")) {
@@ -111,8 +108,6 @@ export default class Player {
   }
 
   shootTop() {
-    console.log(this.game.ammo);
-
     if (this.game.ammo > 0) {
       this.projectiles.push(new Projectile(this.game, this.x, this.y));
       this.game.ammo--;

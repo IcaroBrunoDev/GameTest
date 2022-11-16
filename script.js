@@ -7,7 +7,6 @@ window.addEventListener("load", function () {
   const width = (canvas.width = this.window.screen.width);
   const height = (canvas.height = 500);
 
-
   const game = new Game(width, height);
 
   let lastTime = 0;
@@ -29,8 +28,8 @@ window.addEventListener("load", function () {
 
     ctx.clearRect(0, 0, width, height);
 
-    game.update(deltaTime);
     game.draw(ctx);
+    game.update(deltaTime);
     requestAnimationFrame(animate);
   }
 
