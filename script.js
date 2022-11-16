@@ -4,6 +4,14 @@ window.addEventListener("load", function () {
   const canvas = document.getElementById("canvas1");
   const ctx = canvas.getContext("2d");
 
+  let isMobile = window.matchMedia("(max-width: 767px)").matches;
+
+  console.log(screen);
+
+  if (isMobile) {
+    screen.orientation.lock("landscape");
+  }
+
   const width = (canvas.width = this.window.screen.width);
   const height = (canvas.height = 500);
 
