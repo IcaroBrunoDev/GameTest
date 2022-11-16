@@ -20,7 +20,6 @@ export default class Projectile {
 
   update() {
     this.x += this.speed;
-
     // Limited Range of Lasers
     if (this.x > this.game.width * 0.8) {
       this.markedForDeletion = true;
@@ -28,6 +27,6 @@ export default class Projectile {
   }
 
   draw(context) {
-    context.drawImage(this.image, this.x, this.y, this.width, this.height);
+    context.drawImage(this.image, this.x + 100, this.y + 22, this.width, this.height);
   }
 }

@@ -4,7 +4,7 @@ window.addEventListener("load", function () {
   const canvas = document.getElementById("canvas1");
   const ctx = canvas.getContext("2d");
 
-  const width = (canvas.width = 700);
+  const width = (canvas.width = this.window.screen.width);
   const height = (canvas.height = 500);
 
 

@@ -23,10 +23,16 @@ export default class Player {
     this.speedX = 0;
     this.maxSpeed = 5;
     this.projectiles = [];
+    this.powerUp = false;
+    this.powerUpTimer = 0;
+    this.powerUpLimit = 10000;
     this.image = document.getElementById("player");
   }
 
-  update() {
+  update(deltaTime) {
+
+    console.log(this.y)
+
     if (this.game.keys.includes("ArrowUp")) {
       this.speedY = -this.maxSpeed;
     } else if (this.game.keys.includes("ArrowDown")) {
@@ -60,6 +66,23 @@ export default class Player {
     } else {
       this.frameX = 0;
     }
+
+    /** PowerUp Apply */
+
+    if (this.powerUp) {
+      if (this.powerUpTimer > this.powerUpLimit) {
+        this.powerUp = false;
+        this.powerUpTimer = 0;
+        this.frameY = 0;
+      } else {
+        this.powerUpTimer += deltaTime;
+        this.frameY = 1;
+
+        if (this.game.ammo < this.game.maxAmmo) {
+          this.game.ammo += 1;
+        }
+      }
+    }
   }
 
   /** @context Canva Context
@@ -69,6 +92,10 @@ export default class Player {
   draw(context) {
     this.game.debug &&
       context.strokeRect(this.x, this.y, this.width, this.height);
+
+    this.projectiles.forEach((projectile) => {
+      projectile.draw(context);
+    });
 
     context.drawImage(
       this.image,
@@ -81,16 +108,30 @@ export default class Player {
       this.width,
       this.height
     );
-
-    this.projectiles.forEach((projectile) => {
-      projectile.draw(context);
-    });
   }
 
   shootTop() {
+    console.log(this.game.ammo);
+
     if (this.game.ammo > 0) {
       this.projectiles.push(new Projectile(this.game, this.x, this.y));
       this.game.ammo--;
     }
+
+    if (this.powerUp) this.powerShoot();
+  }
+
+  powerShoot() {
+    if (this.game.ammo > 0) {
+      this.projectiles.push(new Projectile(this.game, this.x, this.y - 20));
+      this.projectiles.push(new Projectile(this.game, this.x, this.y + 20));
+      this.game.ammo--;
+    }
+  }
+
+  enterPowerUp() {
+    this.powerUpTimer = 0;
+    this.powerUp = true;
+    this.game.ammo = this.game.maxAmmo;
   }
 }

@@ -14,21 +14,15 @@ export default class UI {
     context.shadowColor = "black";
     context.font = this.fontSize + "px" + this.fontFamily;
 
-    /** Score */
-    context.fillText("Score: " + this.game.score, 20, 40);
-
     /** Timer */
-
     context.fillText(
       "Time: " + (this.game.gameTime * 0.001).toFixed(2),
       20,
       100
     );
-    /** Ammo */
-    context.fillStyle = this.color;
-    for (let i = 0; i < this.game.ammo; i++) {
-      context.fillRect(20 + 5 * i, 50, 3, 20);
-    }
+
+    /** Score */
+    context.fillText("Score: " + this.game.score, 20, 40);
 
     /** Game Over Messages */
     if (this.game.gameOver) {
@@ -56,6 +50,15 @@ export default class UI {
         this.game.width * 0.5,
         this.game.height * 0.5 + 40
       );
+    }
+
+    /** Ammo */
+
+    const color = this.game.player.powerUp ? "#ffffbd" : this.color;
+
+    context.fillStyle = color;
+    for (let i = 0; i < this.game.ammo; i++) {
+      context.fillRect(20 + 5 * i, 50, 3, 20);
     }
 
     context.restore();

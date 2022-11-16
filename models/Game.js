@@ -1,6 +1,7 @@
 import Background from "./Background.js";
-import { Angler1 } from "./Enemy.js";
+import { Angler1, Angler2, LuckyFish } from "./Enemy.js";
 import InputHandler from "./InputHandler.js";
+import Particles from "./Particles.js";
 import Player from "./Player.js";
 import UI from "./UI.js";
 
@@ -13,18 +14,19 @@ export default class Game {
     this.score = 0;
     this.winningScore = 10;
     this.gameTime = 0;
-    this.timeLimit = 15000;
+    this.timeLimit = 150000;
     this.gameOver = false;
     this.debug = true;
 
     this.keys = [];
     this.enemies = [];
+    this.particles = [];
 
     this.enemyTimer = 0;
     this.enemyInterval = 1000;
 
-    this.ammo = 20;
-    this.maxAmmo = 50;
+    this.ammo = 0;
+    this.maxAmmo = 10;
     this.ammoTimer = 0;
     this.ammoInterval = 500;
 
@@ -39,30 +41,58 @@ export default class Game {
 
     if (this.gameTime > this.timeLimit) this.gameOver = true;
 
-    this.player.update();
+    this.player.update(deltaTime);
     this.background.update();
     this.background.layer4.update();
 
     if (this.ammoTimer > this.ammoInterval) {
-      if (this.ammo < this.maxAmmo) this.ammo++;
+      if (this.ammo < this.maxAmmo) this.ammo += 1;
       this.ammoTimer = 0;
     } else {
       this.ammoTimer += deltaTime;
     }
+
+    this.particles.forEach((particle) => particle.update());
+    this.particles = this.particles.filter(
+      (particle) => !particle.markedForDeletion
+    );
 
     this.enemies.forEach((enemy) => {
       enemy.update();
 
       if (this.checkCollision(this.player, enemy)) {
         enemy.markedForDeletion = true;
+
+        for (let i = 0; i < 10; i++) {
+          this.particles.push(
+            new Particles(
+              this,
+              enemy.x + enemy.width * 0.5,
+              enemy.y + enemy.height * 0.5
+            )
+          );
+        }
+
+        if (enemy.type === "lucky") this.player.enterPowerUp();
+        else this.score--;
       }
 
       this.player.projectiles.forEach((projectile) => {
         if (this.checkCollision(projectile, enemy)) {
-          enemy.lives--;
+          enemy.lives = enemy.lives - 1;
           projectile.markedForDeletion = true;
+
+          this.particles.push(
+            new Particles(
+              this,
+              enemy.x + enemy.width * 0.5,
+              enemy.y + enemy.height * 0.5
+            )
+          );
+
           if (enemy.lives <= 0) {
             enemy.markedForDeletion = true;
+
             if (!this.gameOver) this.score += enemy.score;
             if (this.score >= this.winningScore) this.gameOver = true;
           }
@@ -84,6 +114,7 @@ export default class Game {
     this.background.draw(context);
     this.player.draw(context);
     this.ui.draw(context);
+    this.particles.forEach((particle) => particle.draw(context));
     this.enemies.forEach((enemy) => {
       enemy.draw(context);
     });
@@ -91,7 +122,13 @@ export default class Game {
   }
 
   addEnemy() {
-    this.enemies.push(new Angler1(this));
+    const randomize = Math.random();
+
+    if (randomize < 0.1) {
+      this.enemies.push(new Angler1(this));
+    } else if (randomize < 0.6) {
+      this.enemies.push(new Angler2(this));
+    } else this.enemies.push(new LuckyFish(this));
   }
 
   checkCollision(rect1, rect2) {

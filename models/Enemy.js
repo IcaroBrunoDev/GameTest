@@ -4,8 +4,7 @@ export default class Enemy {
     this.x = this.game.width;
     this.speedX = Math.random() * -1.5 - 0.5;
     this.markedForDeletion = false;
-    this.lives = 5;
-    this.score = this.lives;
+
 
     this.frameX = 0;
     this.frameY = 0;
@@ -51,6 +50,8 @@ export class Angler1 extends Enemy {
   constructor(game) {
     super(game);
 
+    this.lives = 5;
+    this.score = this.lives;
     this.width = 228;
     this.height = 169;
     this.y = Math.random() * (this.game.height * 0.9 - this.height);
@@ -58,5 +59,40 @@ export class Angler1 extends Enemy {
     this.frameY = Math.floor(Math.random() * 3);
 
     this.image = document.getElementById("angler1");
+  }
+}
+
+
+export class Angler2 extends Enemy {
+  constructor(game) {
+    super(game);
+
+    this.lives = 10;
+    this.score = this.lives;
+    this.width = 213;
+    this.height = 165;
+    this.y = Math.random() * (this.game.height * 0.9 - this.height);
+
+    this.frameY = Math.floor(Math.random() * 2);
+
+    this.image = document.getElementById("angler2");
+  }
+}
+
+
+
+export class LuckyFish extends Enemy {
+  constructor(game) {
+    super(game);
+
+    this.lives = 3;
+    this.score = this.lives;
+    this.width = 99;
+    this.height = 95;
+    this.y = Math.random() * (this.game.height * 0.9 - this.height);
+    this.type = 'lucky';
+    this.frameY = Math.floor(Math.random() * 2);
+
+    this.image = document.getElementById("lucky");
   }
 }
