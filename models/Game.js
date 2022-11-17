@@ -6,9 +6,10 @@ import Player from "./Player.js";
 import UI, { SmokeExplosion } from "./UI.js";
 
 export default class Game {
-  constructor(width, height) {
+  constructor(width, height, isMobile) {
     this.width = width;
     this.height = height;
+    this.isMobile = isMobile;
 
     this.speed = 1;
     this.score = 0;
@@ -69,18 +70,11 @@ export default class Game {
       if (this.checkCollision(this.player, enemy)) {
         enemy.markedForDeletion = true;
 
-        for (let i = 0; i < enemy.score; i++) {
-          this.particles.push(
-            new Particles(
-              this,
-              enemy.x + enemy.width * 0.5,
-              enemy.y + enemy.height * 0.5
-            )
-          );
-        }
-
         if (enemy.type === "lucky") this.player.enterPowerUp();
-        else if (!this.gameOver) this.score--;
+        else if (!this.gameOver) {
+          this.score--;
+          this.gameOver = true;
+        }
       }
 
       this.player.projectiles.forEach((projectile) => {
@@ -100,19 +94,22 @@ export default class Game {
           );
 
           if (enemy.lives <= 0) {
-            for (let i = 0; i < enemy.score; i++) {
-              this.particles.push(
-                new Particles(
-                  this,
-                  enemy.x + enemy.width * 0.5,
-                  enemy.y + enemy.height * 0.5
-                )
-              );
-            }
-
-            this.addExplosion(enemy);
-
             enemy.markedForDeletion = true;
+
+            /** Particles and Explosion effects dont will be work in mobile (Perfomance Issues) */
+            if (!this.isMobile) {
+              for (let i = 0; i < enemy.score; i++) {
+                this.particles.push(
+                  new Particles(
+                    this,
+                    enemy.x + enemy.width * 0.5,
+                    enemy.y + enemy.height * 0.5
+                  )
+                );
+              }
+
+              this.addExplosion(enemy);
+            }
 
             if (enemy.type === "hive") {
               for (let i = 0; i < 5; i++) {
@@ -168,8 +165,7 @@ export default class Game {
   }
 
   addExplosion(enemy) {
-    const randomize = Math.random();
-
+    // const randomize = Math.random();
     this.explosions.push(new SmokeExplosion(this, enemy.x, enemy.y));
   }
 

@@ -1,21 +1,29 @@
 import Game from "./models/Game.js";
+import VirtualPad from "./models/VirtualPad.js";
 
 window.addEventListener("load", function () {
   const canvas = document.getElementById("canvas1");
   const ctx = canvas.getContext("2d");
 
-  let isMobile = window.matchMedia("(max-width: 767px)").matches;
+  const virtualPad = new VirtualPad();
 
-  console.log(screen);
+  virtualPad.shootTrigger();
+  virtualPad.arrowUpTrigger();
+  virtualPad.arrowDownTrigger();
+  virtualPad.arrowLeftTrigger();
+  virtualPad.arrowRightTrigger();
+
+  let isMobile = window.matchMedia("(max-width: 767px)").matches;
 
   if (isMobile) {
     screen.orientation.lock("landscape");
   }
 
-  const width = (canvas.width = this.window.screen.width);
+  const width = (canvas.width =
+    window.screen.width > 800 ? this.window.screen.width : 800);
   const height = (canvas.height = 500);
 
-  const game = new Game(width, height);
+  const game = new Game(width, height, isMobile);
 
   let lastTime = 0;
 
