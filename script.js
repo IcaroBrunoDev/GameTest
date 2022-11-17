@@ -5,17 +5,17 @@ window.addEventListener("load", function () {
   const canvas = document.getElementById("canvas1");
   const ctx = canvas.getContext("2d");
 
-  const virtualPad = new VirtualPad();
-
-  virtualPad.shootTrigger();
-  virtualPad.arrowUpTrigger();
-  virtualPad.arrowDownTrigger();
-  virtualPad.arrowLeftTrigger();
-  virtualPad.arrowRightTrigger();
-
   let isMobile = window.matchMedia("(max-width: 767px)").matches;
 
   if (isMobile) {
+    const virtualPad = new VirtualPad();
+
+    virtualPad.shootTrigger();
+    virtualPad.arrowUpTrigger();
+    virtualPad.arrowDownTrigger();
+    virtualPad.arrowLeftTrigger();
+    virtualPad.arrowRightTrigger();
+
     screen.orientation.lock("landscape");
   }
 
