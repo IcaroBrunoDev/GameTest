@@ -8,11 +8,11 @@ export default class VirtualPad {
   }
 
   shootTrigger() {
-    this.shoot.onmousedown = () => {
+    this.shoot.ontouchstart = () => {
       window.dispatchEvent(new KeyboardEvent("keydown", { key: " " }));
     };
 
-    this.shoot.onmouseup = () => {
+    this.shoot.ontouchend = () => {
       setTimeout(() => {
         window.dispatchEvent(new KeyboardEvent("keyup", { key: " " }));
       }, 100);
@@ -20,11 +20,11 @@ export default class VirtualPad {
   }
 
   arrowUpTrigger() {
-    this.arrowUp.onmousedown = () => {
+    this.arrowUp.ontouchstart = () => {
       window.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowUp" }));
     };
 
-    this.arrowUp.onmouseup = () => {
+    this.arrowUp.ontouchend = () => {
       setTimeout(() => {
         window.dispatchEvent(new KeyboardEvent("keyup", { key: "ArrowUp" }));
       }, 100);
@@ -32,11 +32,11 @@ export default class VirtualPad {
   }
 
   arrowDownTrigger() {
-    this.arrowDown.onmousedown = () => {
+    this.arrowDown.ontouchstart = () => {
       window.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowDown" }));
     };
 
-    this.arrowDown.onmouseup = () => {
+    this.arrowDown.ontouchend = () => {
       setTimeout(() => {
         window.dispatchEvent(new KeyboardEvent("keyup", { key: "ArrowDown" }));
       }, 100);
@@ -44,11 +44,11 @@ export default class VirtualPad {
   }
 
   arrowLeftTrigger() {
-    this.arrowLeft.onmousedown = () => {
+    this.arrowLeft.ontouchstart = () => {
       window.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowLeft" }));
     };
 
-    this.arrowLeft.onmouseup = () => {
+    this.arrowLeft.ontouchend = () => {
       setTimeout(() => {
         window.dispatchEvent(new KeyboardEvent("keyup", { key: "ArrowLeft" }));
       }, 100);
@@ -56,11 +56,11 @@ export default class VirtualPad {
   }
 
   arrowRightTrigger() {
-    this.arrowRight.onmousedown = () => {
+    this.arrowRight.ontouchstart = () => {
       window.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowRight" }));
     };
 
-    this.arrowRight.onmouseup = () => {
+    this.arrowRight.ontouchend = () => {
       setTimeout(() => {
         window.dispatchEvent(new KeyboardEvent("keyup", { key: "ArrowRight" }));
       }, 100);
