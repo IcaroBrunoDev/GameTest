@@ -5,8 +5,6 @@ export default class InputHandler {
     window.addEventListener("keydown", (event) => {
       const { key } = event;
 
-      console.log(key)
-
       if (
         (key === "ArrowUp" ||
           key === "ArrowDown" ||

@@ -23,9 +23,9 @@ export default class Player {
     this.speedX = 0;
     this.maxSpeed = 5;
     this.projectiles = [];
-    this.powerUp = true;
+    this.powerUp = false;
     this.powerUpTimer = 0;
-    this.powerUpLimit = 100000000;
+    this.powerUpLimit = 3500;
     this.image = document.getElementById("player");
   }
 

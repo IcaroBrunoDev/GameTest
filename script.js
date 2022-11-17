@@ -5,7 +5,7 @@ window.addEventListener("load", function () {
   const canvas = document.getElementById("canvas1");
   const ctx = canvas.getContext("2d");
 
-  let isMobile = window.matchMedia("(max-width: 767px)").matches;
+  let isMobile = window.matchMedia("(max-width: 1024px)").matches;
 
   if (isMobile) {
     const virtualPad = new VirtualPad();
@@ -16,7 +16,7 @@ window.addEventListener("load", function () {
     virtualPad.arrowLeftTrigger();
     virtualPad.arrowRightTrigger();
 
-    screen.orientation.lock("landscape");
+    // screen.orientation.lock("landscape");
   }
 
   const width = (canvas.width =

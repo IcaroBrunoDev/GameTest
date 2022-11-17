@@ -13,11 +13,11 @@ export default class Game {
 
     this.speed = 1;
     this.score = 0;
-    this.winningScore = 100000000000;
+    this.winningScore = 100;
     this.gameTime = 0;
-    this.timeLimit = 150000;
+    this.timeLimit = 50000;
     this.gameOver = false;
-    this.debug = true;
+    this.debug = false;
 
     this.keys = [];
     this.enemies = [];
@@ -73,13 +73,14 @@ export default class Game {
         if (enemy.type === "lucky") this.player.enterPowerUp();
         else if (!this.gameOver) {
           this.score--;
-          this.gameOver = true;
+          // this.gameOver = true;
         }
       }
 
       this.player.projectiles.forEach((projectile) => {
         if (this.checkCollision(projectile, enemy)) {
-          const projectileDamage = this.player.powerUp ? 15 : 1;
+
+          const projectileDamage = this.player.powerUp ? 3 : 1;
 
           enemy.lives = enemy.lives - projectileDamage;
 

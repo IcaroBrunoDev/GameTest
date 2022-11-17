@@ -46,6 +46,12 @@ body {
   overflow: hidden;
 }
 
+@media (min-width: 1024px) {
+  .dpad-container {
+    display: none;
+  }
+}
+
 .dpad-container .dpad {
   width: 150px;
   height: 150px;
